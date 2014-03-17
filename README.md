@@ -1,125 +1,158 @@
-# JavaScript GitHub API for Node.JS
+# MEAN Stack
 
-A Node.JS module, which provides an object oriented wrapper for the GitHub v3 API.
+MEAN is a boilerplate that provides a nice starting point for [MongoDB](http://www.mongodb.org/), [Node.js](http://www.nodejs.org/), [Express](http://expressjs.com/), and [AngularJS](http://angularjs.org/) based applications. It is designed to give you quick and organized way to start developing of MEAN based web apps with useful modules like mongoose and passport pre-bundled and configured. We mainly try to take care of the connection points between existing popular frameworks and solve common integration problems.  
 
-## Installation
+## Prerequisites
+* Node.js - Download and Install [Node.js](http://www.nodejs.org/download/). You can also follow [this gist](https://gist.github.com/isaacs/579814) for a quick and easy way to install Node.js and npm
+* MongoDB - Download and Install [MongoDB](http://www.mongodb.org/downloads) - Make sure it's running on the default port (27017).
 
-  Install with the Node.JS package manager [npm](http://npmjs.org/):
+### Tools Prerequisites
+* NPM - Node.js package manager, should be installed when you install node.js.
+* Bower - Web package manager, installing [Bower](http://bower.io/) is simple when you have npm:
 
-      $ npm install github
+```
+$ npm install -g bower
+```
 
-or
+### Optional
+* Grunt - Download and Install [Grunt](http://gruntjs.com).
 
-  Install via git clone:
+## Additional Packages
+* Express - Defined as npm module in the [package.json](package.json) file.
+* Mongoose - Defined as npm module in the [package.json](package.json) file.
+* Passport - Defined as npm module in the [package.json](package.json) file.
+* AngularJS - Defined as bower module in the [bower.json](bower.json) file.
+* Twitter Bootstrap - Defined as bower module in the [bower.json](bower.json) file.
+* UI Bootstrap - Defined as bower module in the [bower.json](bower.json) file.
 
-      $ git clone git://github.com/ajaxorg/node-github.git
-      $ cd node-github
-      $ npm install
+## Quick Install
+  The quickest way to get started with MEAN is to clone the project and utilize it like this:
 
-## Documentation
+  Install dependencies:
 
-You can find the docs for the API of this client at [http://ajaxorg.github.com/node-github/](http://ajaxorg.github.com/node-github/)
+    $ npm install
 
-Additionally, the [official Github documentation](http://developer.github.com/)
-is a very useful resource.
+  We recommend using [Grunt](https://github.com/gruntjs/grunt-cli) to start the server:
 
-## Example
+    $ grunt
+    
+  When not using grunt you can use:
 
-Print all followers of the user "mikedeboer" to the console.
+    $ node server
+    
+  Then open a browser and go to:
 
-    var GitHubApi = require("github");
+    http://localhost:3000
 
-    var github = new GitHubApi({
-        // required
-        version: "3.0.0",
-        // optional
-        timeout: 5000
-    });
-    github.user.getFollowingFromUser({
-        user: "mikedeboer"
-    }, function(err, res) {
-        console.log(JSON.stringify(res));
-    });
 
-First the _GitHubApi_ class is imported from the _node-github_ module. This class provides
-access to all of GitHub's APIs (e.g. user, issues or repo APIs). The _getFollowingFromUser_
-method lists all followers of a given GitHub user. Is is part of the user API. It
-takes the user name as first argument and a callback as last argument. Once the
-follower list is returned from the server, the callback is called.
+## Troubleshooting
+During install some of you may encounter some issues, most of this issues can be solved by one of the following tips.
+If you went through all this and still can't solve the issue, feel free to contact us via the repository issue tracker or the links provided below.
 
-Like in Node.JS, callbacks are always the last argument. If the functions fails an
-error object is passed as first argument to the callback.
+#### Update NPM, Bower or Grunt
+Sometimes you may find there is a weird error during install like npm's *Error: ENOENT*, usually updating those tools to the latest version solves the issue.
 
-## Authentication
+Updating NPM:
+```
+$ npm update -g npm
+```
 
-Most GitHub API calls don't require authentication. As a rule of thumb: If you
-can see the information by visiting the site without being logged in, you don't
-have to be authenticated to retrieve the same information through the API. Of
-course calls, which change data or read sensitive information have to be authenticated.
+Updating Grunt:
+```
+$ npm update -g grunt-cli
+```
 
-You need the GitHub user name and the API key for authentication. The API key can
-be found in the user's _Account Settings_ page.
+Updating Bower:
+```
+$ npm update -g bower
+```
 
-This example shows how to authenticate and then change _location_ field of the
-account settings to _Argentina_:
+#### Cleaning NPM and Bower cache
+NPM and Bower has a caching system for holding packages that you already installed.
+We found that often cleaning the cache solves some troubles this system creates.
 
-    github.authenticate({
-        type: "basic",
-        username: username,
-        password: password
-    });
-    github.user.update({
-        location: "Argentina"
-    }, function(err) {
-        console.log("done!");
-    });
+NPM Clean Cache:
+```
+$ npm cache clean
+```
 
-Note that the _authenticate_ method is synchronous because it only stores the
-credentials for the next request.
+Bower Clean Cache:
+```
+$ bower cache clean
+```
 
-Other examples for the various authentication methods:
+ 
+## Configuration
+All configuration is specified in the [config](config/) folder, particularly the [config.js](config/config.js) file and the [env](config/env/) files. Here you will need to specify your application name, database name, as well as hook up any social app keys if you want integration with Twitter, Facebook, GitHub or Google.
 
-    // OAuth2
-    github.authenticate({
-        type: "oauth",
-        token: token
-    });
+### Environmental Settings
 
-    // Deprecated Gihub API token (seems not to be working with the v3 API)
-    github.authenticate({
-        type: "token",
-        token: token
-    });
+There are three environments provided by default, __development__, __test__, and __production__. Each of these environments has the following configuration options:
+* __db__ - This is the name of the MongoDB database to use, and is set by default to __mean-dev__ for the development environment.
+* __app.name__ - This is the name of your app or website, and can be different for each environment. You can tell which environment you are running by looking at the TITLE attribute that your app generates.
+* __Social OAuth Keys__ - Facebook, GitHub, Google, Twitter. You can specify your own social application keys here for each platform:
+	* __clientID__
+	* __clientSecret__
+	* __callbackURL__
 
-## Implemented GitHub APIs
+To run with a different environment, just specify NODE_ENV as you call grunt:
 
-* Gists: 100%
-* Git Data: 100%
-* Issues: 100%
-* Orgs: 100%
-* Pull Requests: 100%
-* Repos: 100%
-* Users: 100%
-* Events: 100%
-* Search: 100%
-* Markdown: 100%
+	$ NODE_ENV=test grunt
 
-## Running the Tests
+If you are using node instead of grunt, it is very similar:
 
-The unit tests are based on the [mocha](http://visionmedia.github.com/mocha/)
-module, which may be installed via npm. To run the tests make sure that the
-npm dependencies are installed by running `npm install` from the project directory.
+	$ NODE_ENV=test node server
 
-Before running unit tests:
+> NOTE: Running Node.js applications in the __production__ environment enables caching, which is disabled by default in all other environments.
 
-    npm install mocha -g
+## Getting Started
+  We pre-included an article example, check it out:
+  * [The Model](app/models/article.js) - Where we define our object schema.
+  * [The Controller](app/controllers/articles.js) - Where we take care of our backend logic.
+  * [NodeJS Routes](app/routes) - Where we define our REST service routes.
+  * [AngularJs Routes](public/js/config.js) - Where we define our CRUD routes.
+  * [The AngularJs Service](public/js/services/articles.js) - Where we connect to our REST service.
+  * [The AngularJs Controller](public/js/controllers/articles.js) - Where we take care of  our frontend logic.
+  * [The AngularJs Views Folder](public/views/articles) - Where we keep our CRUD views.
 
-At the moment, test classes can only be run separately. This will e.g. run the Issues Api test:
+## Heroku Quick Deployment
+Before you start make sure you have <a href="https://toolbelt.heroku.com/">heroku toolbelt</a> installed and an accessible mongo db instance - you can try <a href="http://www.mongohq.com/">mongohq</a> which have an easy setup )
 
-    mocha api/v3.0.0/issuesTest.js
+```bash
+git init
+git add .
+git commit -m "initial version"
+heroku apps:create
+git push heroku master
+```
 
-Note that a connection to the internet is required to run the tests.
+## More Information
+  * Visit us at [Linnovate.net](http://www.linnovate.net/).
+  * Visit our [Ninja's Zone](http://www.meanleanstartupmachine.com/) for extended support.
 
-## LICENSE
+## Credits
+* Inspired by the great work of [Madhusudhan Srinivasa](https://github.com/madhums/)
+* The MEAN name was coined by [Valeri Karpov](http://blog.mongodb.org/post/49262866911/the-mean-stack-mongodb-expressjs-angularjs-and)
+* MEAN could not be as great as it is without the contribution of the [following people](https://github.com/linnovate/mean/blob/master/AUTHORS). 
 
-MIT license. See the LICENSE file for details.
+## License
+(The MIT License)
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+'Software'), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
