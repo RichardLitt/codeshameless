@@ -5,16 +5,6 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		watch: {
-			less: {
-				files: [
-				'public/less/app.less',
-				'public/lib/bootstrap/less/*.less'
-				],
-				tasks: ['less'],
-				options: {
-					livereload: true
-				}
-			},
 			js: {
 				files: ['gruntfile.js', 'server.js', 'app/**/*.js', 'public/js/**', 'test/**/*.js'],
 				tasks: ['jshint'],
@@ -40,23 +30,6 @@ module.exports = function(grunt) {
 				src: ['gruntfile.js', 'server.js', 'app/**/*.js', 'public/js/**', 'test/**/*.js', '!test/coverage/**/*.js'],
 				options: {
 					jshintrc: true
-				}
-			}
-		},
-		less: {
-			dist: {
-				files: {
-					'public/css/main.min.css': [
-					'public/less/app.less'
-					]
-				},
-				options: {
-					compress: true,
-					// LESS source map
-					// To enable, set sourceMap to true and update sourceMapRootpath based on your install
-					// sourceMap: false,
-					// sourceMapFilename: '',
-					// sourceMapRootpath: ''
 				}
 			}
 		},
@@ -109,13 +82,12 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-nodemon');
 	grunt.loadNpmTasks('grunt-concurrent');
 	grunt.loadNpmTasks('grunt-env');
-	grunt.loadNpmTasks('grunt-contrib-less');
 
 	//Making grunt default to force in order not to break the project.
 	grunt.option('force', true);
 
 	//Default task(s).
-	grunt.registerTask('default', ['jshint', 'concurrent', 'less']);
+	grunt.registerTask('default', ['jshint', 'concurrent']);
 
 	//Test task.
 	grunt.registerTask('test', ['env:test', 'mochaTest', 'karma:unit']);
