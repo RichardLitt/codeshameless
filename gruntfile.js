@@ -7,10 +7,13 @@ module.exports = function(grunt) {
 		watch: {
 			less: {
 				files: [
-				'public/lib/less/app.less',
+				'public/less/app.less',
 				'public/lib/bootstrap/less/*.less'
 				],
-				tasks: ['less']
+				tasks: ['less'],
+				options: {
+					livereload: true
+				}
 			},
 			js: {
 				files: ['gruntfile.js', 'server.js', 'app/**/*.js', 'public/js/**', 'test/**/*.js'],
@@ -44,7 +47,7 @@ module.exports = function(grunt) {
 			dist: {
 				files: {
 					'public/css/main.min.css': [
-					'public/lib/less/app.less'
+					'public/less/app.less'
 					]
 				},
 				options: {
