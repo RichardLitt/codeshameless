@@ -65,7 +65,6 @@
     "grunt-contrib-watch": "latest",
     "grunt-contrib-jshint": "latest",
     "grunt-contrib-less": "~0.8.1",
-    "grunt-contrib-uglify": "~0.2.4",
     "grunt-nodemon": "0.2.0",
     "grunt-concurrent": "latest",
     "grunt-mocha-test": "latest",

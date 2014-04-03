@@ -14,7 +14,7 @@ module.exports = function(grunt) {
 			},
 			js: {
 				files: ['gruntfile.js', 'server.js', 'app/**/*.js', 'public/js/**', 'test/**/*.js'],
-				tasks: ['jshint', 'uglify'],
+				tasks: ['jshint'],
 				options: {
 					livereload: true
 				}
@@ -54,20 +54,6 @@ module.exports = function(grunt) {
 					// sourceMap: false,
 					// sourceMapFilename: '',
 					// sourceMapRootpath: ''
-				}
-			}
-		},
-		uglify: {
-			dist: {
-				files: {
-					'public/js/scripts.min.js': [
-					'public/lib/bootstrap/js/*.js'
-					]
-				},
-				options: {
-					// JS source map: to enable, uncomment the lines below and update sourceMappingURL based on your install
-					// sourceMap: '',
-					// sourceMappingURL: ''
 				}
 			}
 		},
@@ -121,13 +107,12 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-concurrent');
 	grunt.loadNpmTasks('grunt-env');
 	grunt.loadNpmTasks('grunt-contrib-less');
-	grunt.loadNpmTasks('grunt-contrib-uglify');
 
 	//Making grunt default to force in order not to break the project.
 	grunt.option('force', true);
 
 	//Default task(s).
-	grunt.registerTask('default', ['jshint', 'concurrent', 'less', 'uglify']);
+	grunt.registerTask('default', ['jshint', 'concurrent', 'less']);
 
 	//Test task.
 	grunt.registerTask('test', ['env:test', 'mochaTest', 'karma:unit']);
