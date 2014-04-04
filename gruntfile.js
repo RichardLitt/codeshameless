@@ -6,7 +6,7 @@ module.exports = function(grunt) {
 		pkg: grunt.file.readJSON('package.json'),
 		watch: {
 			sass: {
-				files: ['public/lib/compass/sass/*.scss', 'public/lib/sass-bootstrap/lib/*.scss'],
+				files: ['public/lib/compass/sass/*.scss', 'public/lib/bootstrap-sass-official/vendor/assets/stylesheets/*.scss'],
 				tasks: ['sass'],
 			},
 			js: {

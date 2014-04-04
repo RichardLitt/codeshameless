@@ -9,6 +9,6 @@
     "angular-route": "latest",
     "angular-bootstrap": "0.10.0",
     "angular-ui-router": "#master",
-    "sass-bootstrap": "~3.0.2"
+    "bootstrap-sass-official": "~3.1.1"
   }
 }
