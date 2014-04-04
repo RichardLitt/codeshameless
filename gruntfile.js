@@ -38,7 +38,8 @@ module.exports = function(grunt) {
 				files: {
 					'public/css/screen.css': 'public/lib/compass/sass/screen.scss',
 					'public/css/ie.css': 'public/lib/compass/sass/ie.scss',
-					'public/css/print.css': 'public/lib/compass/sass/print.scss'
+					'public/css/print.css': 'public/lib/compass/sass/print.scss',
+					'public/css/bootstrap.min.css': 'public/lib/bootstrap-sass-official/vendor/assets/stylesheets/bootstrap.scss'
 				}
 			}
 		},
