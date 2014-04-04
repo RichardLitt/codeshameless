@@ -5,6 +5,10 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		watch: {
+			sass: {
+				files: ['public/lib/compass/sass/*.scss', 'public/lib/sass-bootstrap/lib/*.scss'],
+				tasks: ['sass'],
+			},
 			js: {
 				files: ['gruntfile.js', 'server.js', 'app/**/*.js', 'public/js/**', 'test/**/*.js'],
 				tasks: ['jshint'],
@@ -19,9 +23,22 @@ module.exports = function(grunt) {
 				}
 			},
 			css: {
-				files: ['public/css/**'],
+				files: ['public/css/*.css', 'public/css/**/*.css'],
 				options: {
 					livereload: true
+				}
+			}
+		},
+		sass: {
+			dist: {
+				options: {
+					style: 'compressed',
+					compass: true
+				},
+				files: {
+					'public/css/screen.css': 'public/lib/compass/sass/screen.scss',
+					'public/css/ie.css': 'public/lib/compass/sass/ie.scss',
+					'public/css/print.css': 'public/lib/compass/sass/print.scss'
 				}
 			}
 		},
@@ -83,13 +100,12 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-concurrent');
 	grunt.loadNpmTasks('grunt-env');
 	grunt.loadNpmTasks('grunt-contrib-sass');
-	grunt.loadNpmTasks('grunt-contrib-compass');
 
 	//Making grunt default to force in order not to break the project.
 	grunt.option('force', true);
 
 	//Default task(s).
-	grunt.registerTask('default', ['jshint', 'concurrent']);
+	grunt.registerTask('default', ['jshint', 'concurrent', 'sass']);
 
 	//Test task.
 	grunt.registerTask('test', ['env:test', 'mochaTest', 'karma:unit']);
